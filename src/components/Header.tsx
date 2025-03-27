@@ -12,17 +12,16 @@ import { Menu, Plus } from 'lucide-react';
 
 const Header: React.FC = () => {
   const location = useLocation();
-  
-  // Simple check if user is on auth pages to avoid showing duplicate auth buttons
+
   const isAuthPage = location.pathname === '/signin' || location.pathname === '/signup' || location.pathname.includes('/signup-');
-  const isLoggedIn = false; // This would be determined by your auth context in a real app
+  const isLoggedIn = false; 
   
   return (
     <header className="border-b sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
       <div className="container mx-auto flex items-center justify-between py-4 px-4 md:px-6">
         <Link to="/" className="flex items-center">
           <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-            HackNexus
+            Hack Fest
           </span>
         </Link>
         

@@ -30,10 +30,10 @@ const App = () => (
           <Route path="/signup-organizer" element={<SignUpOrganizer />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/create-event" element={<CreateEvent />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
-        {/* AI Bot Icon will appear on all pages */}
+        
         <AiBotIcon />
       </BrowserRouter>
     </TooltipProvider>

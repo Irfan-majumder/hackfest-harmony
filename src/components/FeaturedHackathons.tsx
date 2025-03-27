@@ -1,6 +1,7 @@
 
 import React from 'react';
-import HackathonCard from './HackathonCard';
+import { Link } from 'react-router-dom';
+import HackathonCard, { HackathonStatus } from './HackathonCard';
 import { Button } from '@/components/ui/button';
 import { ChevronRight } from 'lucide-react';
 
@@ -16,7 +17,7 @@ const hackathons = [
     teamSize: '2-5 members',
     prizes: '$10,000 in prizes',
     imageUrl: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80',
-    status: 'upcoming',
+    status: 'upcoming' as HackathonStatus,
     featured: true,
   },
   {
@@ -30,7 +31,7 @@ const hackathons = [
     teamSize: '3-4 members',
     prizes: '$5,000 + mentorship',
     imageUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    status: 'active',
+    status: 'active' as HackathonStatus,
   },
   {
     id: '3',
@@ -43,7 +44,7 @@ const hackathons = [
     teamSize: '1-4 members',
     prizes: '€7,500 in prizes',
     imageUrl: 'https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1174&q=80',
-    status: 'upcoming',
+    status: 'upcoming' as HackathonStatus,
   },
 ];
 
@@ -62,9 +63,12 @@ const FeaturedHackathons: React.FC = () => {
           <Button 
             variant="outline" 
             className="mt-4 md:mt-0 group"
+            asChild
           >
-            View All Hackathons
-            <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <Link to="/browse-hackathons">
+              View All Hackathons
+              <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
           </Button>
         </div>
         

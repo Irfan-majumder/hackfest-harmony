@@ -3,11 +3,15 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ChevronRight, Search, Users, Calendar, Award, Code, MessageSquare, Bookmark } from 'lucide-react';
 
 const ForParticipants: React.FC = () => {
+  // Check if user is logged in - this would be from your auth context in a real app
+  const isLoggedIn = false;
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -29,13 +33,21 @@ const ForParticipants: React.FC = () => {
                   Connect with fellow innovators, showcase your skills, and build awesome projects that matter. Find the perfect hackathon for you.
                 </p>
                 <div className="flex flex-wrap gap-4 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                  <Button size="lg" className="bg-accent hover:bg-accent/90 transition-colors">
-                    Explore Hackathons
-                    <ChevronRight className="ml-1 h-5 w-5" />
+                  <Button size="lg" className="bg-accent hover:bg-accent/90 transition-colors" asChild>
+                    <Link to="/browse-hackathons">
+                      Explore Hackathons
+                      <ChevronRight className="ml-1 h-5 w-5" />
+                    </Link>
                   </Button>
-                  <Button size="lg" variant="outline">
-                    Create Your Profile
-                  </Button>
+                  {isLoggedIn ? (
+                    <Button size="lg" variant="outline" asChild>
+                      <Link to="/profile">Your Profile</Link>
+                    </Button>
+                  ) : (
+                    <Button size="lg" variant="outline" asChild>
+                      <Link to="/signup">Create Your Profile</Link>
+                    </Button>
+                  )}
                 </div>
                 <div className="mt-8 flex items-center space-x-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
                   <Badge variant="secondary" className="py-1">Free registration</Badge>
@@ -313,19 +325,33 @@ const ForParticipants: React.FC = () => {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
-                  <Button 
-                    size="lg" 
-                    className="bg-accent hover:bg-accent/90 transition-colors"
-                  >
-                    Get Started Now
-                  </Button>
+                  {isLoggedIn ? (
+                    <Button 
+                      size="lg" 
+                      className="bg-accent hover:bg-accent/90 transition-colors"
+                      asChild
+                    >
+                      <Link to="/dashboard">Go to Dashboard</Link>
+                    </Button>
+                  ) : (
+                    <Button 
+                      size="lg" 
+                      className="bg-accent hover:bg-accent/90 transition-colors"
+                      asChild
+                    >
+                      <Link to="/signup">Get Started Now</Link>
+                    </Button>
+                  )}
                   <Button 
                     size="lg" 
                     variant="outline" 
                     className="group"
+                    asChild
                   >
-                    Browse Hackathons
-                    <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                    <Link to="/browse-hackathons">
+                      Browse Hackathons
+                      <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                    </Link>
                   </Button>
                 </div>
               </div>

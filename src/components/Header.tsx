@@ -1,130 +1,120 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { 
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  navigationMenuTriggerStyle
-} from "@/components/ui/navigation-menu";
-import { MenuIcon, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Menu, Plus } from 'lucide-react';
 
 const Header: React.FC = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
   
-  useEffect(() => {
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      setScrolled(offset > 10);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+  // Simple check if user is on auth pages to avoid showing duplicate auth buttons
+  const isAuthPage = location.pathname === '/signin' || location.pathname === '/signup' || location.pathname.includes('/signup-');
+  const isLoggedIn = false; // This would be determined by your auth context in a real app
+  
   return (
-    <header 
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-6 md:px-10",
-        scrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm" : "bg-transparent"
-      )}
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Link to="/" className="flex items-center space-x-2">
-          <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent animate-pulse-slow">
-            HackFest
+    <header className="border-b sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
+      <div className="container mx-auto flex items-center justify-between py-4 px-4 md:px-6">
+        <Link to="/" className="flex items-center">
+          <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+            HackNexus
           </span>
         </Link>
-
-        {/* Desktop Navigation */}
-        <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuLink 
-                asChild
-                className={navigationMenuTriggerStyle()}
-              >
-                <Link to="/hackathons">Discover</Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink 
-                asChild
-                className={navigationMenuTriggerStyle()}
-              >
-                <Link to="/for-organizers">For Organizers</Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink 
-                asChild
-                className={navigationMenuTriggerStyle()}
-              >
-                <Link to="/for-participants">For Participants</Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-
-        <div className="hidden md:flex items-center space-x-4">
-          <Button variant="outline" className="hover:border-primary transition-colors">
-            Log In
-          </Button>
-          <Button className="bg-primary hover:bg-primary/90 transition-colors">
-            Sign Up
-          </Button>
-        </div>
-
-        {/* Mobile Menu Toggle */}
-        <button
-          className="md:hidden p-2 rounded-full hover:bg-muted/80 transition-colors"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label={mobileMenuOpen ? "Close Menu" : "Open Menu"}
-        >
-          {mobileMenuOpen ? <X size={24} /> : <MenuIcon size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-16 bg-background z-40 animate-fade-in">
-          <div className="flex flex-col p-6 space-y-6">
-            <Link 
-              to="/hackathons" 
-              className="text-lg font-medium py-2 hover:text-primary transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Discover
-            </Link>
-            <Link 
-              to="/for-organizers" 
-              className="text-lg font-medium py-2 hover:text-primary transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              For Organizers
-            </Link>
-            <Link 
-              to="/for-participants" 
-              className="text-lg font-medium py-2 hover:text-primary transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              For Participants
-            </Link>
-            <div className="pt-4 flex flex-col space-y-3">
-              <Button variant="outline" className="w-full">
-                Log In
-              </Button>
-              <Button className="w-full">
-                Sign Up
-              </Button>
-            </div>
+        
+        <nav className="hidden lg:flex items-center space-x-6">
+          <Link to="/" className={`text-sm transition-colors hover:text-primary ${location.pathname === '/' ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
+            Home
+          </Link>
+          <Link to="/for-organizers" className={`text-sm transition-colors hover:text-primary ${location.pathname === '/for-organizers' ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
+            For Organizers
+          </Link>
+          <Link to="/for-participants" className={`text-sm transition-colors hover:text-primary ${location.pathname === '/for-participants' ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
+            For Participants
+          </Link>
+          <Link to="/browse-hackathons" className={`text-sm transition-colors hover:text-primary ${location.pathname === '/browse-hackathons' ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
+            Browse Hackathons
+          </Link>
+        </nav>
+        
+        <div className="flex items-center space-x-4">
+          {!isAuthPage && (
+            <>
+              {isLoggedIn ? (
+                <>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link to="/create-event">
+                      <Plus className="h-4 w-4 mr-2" />
+                      Create Event
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" size="sm" asChild>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="ghost" size="sm" asChild>
+                    <Link to="/signin">Sign In</Link>
+                  </Button>
+                  <Button size="sm" asChild>
+                    <Link to="/signup">Sign Up</Link>
+                  </Button>
+                </>
+              )}
+            </>
+          )}
+          
+          <div className="block lg:hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <Menu className="h-5 w-5" />
+                  <span className="sr-only">Toggle menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link to="/">Home</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/for-organizers">For Organizers</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/for-participants">For Participants</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/browse-hackathons">Browse Hackathons</Link>
+                </DropdownMenuItem>
+                {!isLoggedIn && !isAuthPage && (
+                  <>
+                    <DropdownMenuItem asChild>
+                      <Link to="/signin">Sign In</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/signup">Sign Up</Link>
+                    </DropdownMenuItem>
+                  </>
+                )}
+                {isLoggedIn && (
+                  <>
+                    <DropdownMenuItem asChild>
+                      <Link to="/create-event">Create Event</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/dashboard">Dashboard</Link>
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 };

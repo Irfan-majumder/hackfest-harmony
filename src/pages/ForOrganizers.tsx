@@ -3,11 +3,15 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ChevronRight, Users, Calendar, Award, BarChart, Layers, CheckCircle, Settings, Filter, MessageSquare } from 'lucide-react';
 
 const ForOrganizers: React.FC = () => {
+  // Check if user is logged in - this would be from your auth context in a real app
+  const isLoggedIn = false;
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -29,10 +33,21 @@ const ForOrganizers: React.FC = () => {
                   Powerful tools to create, manage, and scale your hackathons with ease. Focus on what matters – inspiring innovation and creativity.
                 </p>
                 <div className="flex flex-wrap gap-4 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                  <Button size="lg" className="bg-primary hover:bg-primary/90 transition-colors">
-                    Get Started
-                    <ChevronRight className="ml-1 h-5 w-5" />
-                  </Button>
+                  {isLoggedIn ? (
+                    <Button size="lg" className="bg-primary hover:bg-primary/90 transition-colors" asChild>
+                      <Link to="/create-event">
+                        Create Your Hackathon
+                        <ChevronRight className="ml-1 h-5 w-5" />
+                      </Link>
+                    </Button>
+                  ) : (
+                    <Button size="lg" className="bg-primary hover:bg-primary/90 transition-colors" asChild>
+                      <Link to="/signup-organizer">
+                        Get Started
+                        <ChevronRight className="ml-1 h-5 w-5" />
+                      </Link>
+                    </Button>
+                  )}
                   <Button size="lg" variant="outline">
                     Schedule a Demo
                   </Button>
@@ -286,12 +301,23 @@ const ForOrganizers: React.FC = () => {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
-                  <Button 
-                    size="lg" 
-                    className="bg-primary hover:bg-primary/90 transition-colors"
-                  >
-                    Create Your Hackathon
-                  </Button>
+                  {isLoggedIn ? (
+                    <Button 
+                      size="lg" 
+                      className="bg-primary hover:bg-primary/90 transition-colors"
+                      asChild
+                    >
+                      <Link to="/create-event">Create Your Hackathon</Link>
+                    </Button>
+                  ) : (
+                    <Button 
+                      size="lg" 
+                      className="bg-primary hover:bg-primary/90 transition-colors"
+                      asChild
+                    >
+                      <Link to="/signup-organizer">Create Your Hackathon</Link>
+                    </Button>
+                  )}
                   <Button 
                     size="lg" 
                     variant="outline" 

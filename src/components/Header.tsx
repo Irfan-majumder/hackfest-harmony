@@ -35,9 +35,7 @@ const Header: React.FC = () => {
           <Link to="/for-participants" className={`text-sm transition-colors hover:text-primary ${location.pathname === '/for-participants' ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
             For Participants
           </Link>
-          <Link to="/browse-hackathons" className={`text-sm transition-colors hover:text-primary ${location.pathname === '/browse-hackathons' ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
-            Browse Hackathons
-          </Link>
+          
         </nav>
         
         <div className="flex items-center space-x-4">

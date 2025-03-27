@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronRight, Search, Award, Users, Calendar } from 'lucide-react';
@@ -40,10 +39,12 @@ const Hero: React.FC = () => {
                 <Search className="mr-2 h-5 w-5" />
                 Find Hackathons
               </Button>
-              <Button size="lg" variant="outline" className="group">
-                Create an Event
-                <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
+              <Link to="/create-event">
+                <Button size="lg" variant="outline" className="group">
+                  Create an Event
+                  <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
             </div>
 
             <div className="flex flex-wrap items-center gap-8 text-sm text-muted-foreground">

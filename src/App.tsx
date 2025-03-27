@@ -12,6 +12,7 @@ import SignUpOrganizer from "./pages/SignUpOrganizer";
 import SignIn from "./pages/SignIn";
 import CreateEvent from "./pages/CreateEvent";
 import NotFound from "./pages/NotFound";
+import AiBotIcon from "./components/AiBotIcon";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,8 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        {/* AI Bot Icon will appear on all pages */}
+        <AiBotIcon />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
